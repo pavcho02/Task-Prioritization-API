@@ -5,6 +5,10 @@ VisualStudioVersion = 17.12.35514.174 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskPrioritizatorAPI", "TaskPrioritizatorAPI\TaskPrioritizatorAPI.csproj", "{6A700A7D-9C4D-4C4A-9767-867681C18C67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{41062D97-9742-4428-8D99-8BC362686A9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{5B072A3A-C436-4ED4-BE28-98380F09C0D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{6A700A7D-9C4D-4C4A-9767-867681C18C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A700A7D-9C4D-4C4A-9767-867681C18C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A700A7D-9C4D-4C4A-9767-867681C18C67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41062D97-9742-4428-8D99-8BC362686A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41062D97-9742-4428-8D99-8BC362686A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41062D97-9742-4428-8D99-8BC362686A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41062D97-9742-4428-8D99-8BC362686A9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B072A3A-C436-4ED4-BE28-98380F09C0D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B072A3A-C436-4ED4-BE28-98380F09C0D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B072A3A-C436-4ED4-BE28-98380F09C0D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B072A3A-C436-4ED4-BE28-98380F09C0D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

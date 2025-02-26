@@ -32,7 +32,7 @@ namespace Business
 
         private void UpdatePriority(Data.Model.Task task)
         {
-            if (task.IsComplete)
+            if (task.IsCompleted)
             {
                 task.Priority = PriorityType.low;
             }
@@ -90,7 +90,7 @@ namespace Business
 
         public async Task<IEnumerable<Data.Model.Task>?> GetFilteredByCompletionStatusAsync(bool isCompleted) 
         {
-            var tasks = await context.Tasks.Where(t => t.IsComplete == isCompleted).ToListAsync();
+            var tasks = await context.Tasks.Where(t => t.IsCompleted == isCompleted).ToListAsync();
             if (tasks != null)
             {
                 return tasks;

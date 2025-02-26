@@ -19,6 +19,6 @@ namespace Data.Model
 
         public DateOnly DueDate { get; set; }
 
-        public bool IsComplete { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

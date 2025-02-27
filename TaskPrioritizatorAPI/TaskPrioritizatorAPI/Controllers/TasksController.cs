@@ -18,8 +18,8 @@ namespace TaskPrioritizatorAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTask([FromBody] Data.Model.InputTaskModel inputTask)
         {
-            await taskBusiness.CreateAsync(inputTask);
-            return Ok();
+            var task = await taskBusiness.CreateAsync(inputTask);
+            return Ok(task);
         }
 
         [HttpGet]
@@ -121,16 +121,16 @@ namespace TaskPrioritizatorAPI.Controllers
         }
 
         [HttpPut("/tasks/:{id}")]
-        public async Task<IActionResult> UpdateTask(int id, [FromBody] Data.Model.Task task)
+        public async Task<IActionResult> UpdateTask(int id, [FromBody] Data.Model.TaskUpdateModel task)
         {
-            if ((await taskBusiness.GetAsync(id)) == null)
+            if ((await taskBusiness.GetAsync(id)) == null && task.Id != id)
             {
                 return BadRequest();
             }
             else
             {
                 await taskBusiness.UpdateAsync(task);
-                return Ok(task);
+                return Ok(await taskBusiness.GetAsync(id));
             }
         }
 

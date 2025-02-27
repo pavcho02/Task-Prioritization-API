@@ -11,7 +11,7 @@ namespace Business
 {
     public interface ITaskBusiness
     {
-        public Task CreateAsync(Data.Model.InputTaskModel inputTask);
+        public Task<Data.Model.Task> CreateAsync(Data.Model.InputTaskModel inputTask);
 
         public Task<IEnumerable<Data.Model.Task>?> GetAllAsync();
 
@@ -25,7 +25,7 @@ namespace Business
 
         public Task<Data.Model.Task?> GetAsync(int id);
 
-        public Task UpdateAsync(Data.Model.Task task);
+        public Task UpdateAsync(Data.Model.TaskUpdateModel task);
 
         public Task DeleteAsync(int id);
     }

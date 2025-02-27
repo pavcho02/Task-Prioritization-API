@@ -18,7 +18,8 @@ namespace Business
             {
                 task.Priority = PriorityType.high;
             }
-            else if(task.DueDate.CompareTo(DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-3))) < 0)
+            
+            else if(task.DueDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-3)))
             {
                 task.Priority = PriorityType.medium;
             }
@@ -30,11 +31,19 @@ namespace Business
             return task;
         }
 
-        private void UpdatePriority(Data.Model.Task task)
+        private PriorityType CalculateTaskPriority(Data.Model.TaskUpdateModel task)
         {
-            if (task.IsCompleted)
+            if (task.IsCritical)
             {
-                task.Priority = PriorityType.low;
+                return PriorityType.high;
+            }
+            else if (task.DueDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-3)))
+            {
+                return PriorityType.medium;
+            }
+            else
+            {
+                return PriorityType.low;
             }
         }
 
@@ -43,10 +52,14 @@ namespace Business
             this.context = context;
         }
 
-        public async Task CreateAsync(Data.Model.InputTaskModel inputTask)
+        public async Task<Data.Model.Task> CreateAsync(Data.Model.InputTaskModel inputTask)
         {
-            await context.Tasks.AddAsync(GetTaskWithCalculatedPriority(inputTask));
+            var task = GetTaskWithCalculatedPriority(inputTask);
+
+            await context.Tasks.AddAsync(task);
             await context.SaveChangesAsync();
+
+            return task;
         }
 
         public async Task<Data.Model.Task?> GetAsync(int id)
@@ -119,12 +132,17 @@ namespace Business
             return await GetSortedByPriorityLevelAsync();
         }
 
-        public async Task UpdateAsync(Data.Model.Task task)
+        public async Task UpdateAsync(Data.Model.TaskUpdateModel task)
         {
             var existingTask = await context.Tasks.FindAsync(task.Id);
             if(existingTask != null)
             {
-                context.Entry(existingTask).CurrentValues.SetValues(task);
+                existingTask.Title = task.Title;
+                existingTask.Description = task.Description;
+                existingTask.DueDate = task.DueDate;
+                existingTask.IsCompleted = task.IsCompleted;
+                existingTask.Priority = CalculateTaskPriority(task);
+
                 await context.SaveChangesAsync();
             }
         }

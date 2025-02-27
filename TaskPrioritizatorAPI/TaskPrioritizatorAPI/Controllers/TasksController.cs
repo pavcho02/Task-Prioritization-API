@@ -19,7 +19,7 @@ namespace TaskPrioritizatorAPI.Controllers
         public async Task<IActionResult> CreateTask([FromBody] Data.Model.InputTaskModel inputTask)
         {
             var task = await taskBusiness.CreateAsync(inputTask);
-            return Ok(task);
+            return Created($"/tasks/{task.Id}", task);
         }
 
         [HttpGet]
@@ -48,7 +48,7 @@ namespace TaskPrioritizatorAPI.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return NotFound("No tasks founded with sorting parameters");
                 }
             }
             else if (HttpContext.Request.Query.ContainsKey("filter"))
@@ -89,7 +89,7 @@ namespace TaskPrioritizatorAPI.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return NotFound("No tasks founded with filter parameters");
                 }
             }
             else
@@ -97,7 +97,7 @@ namespace TaskPrioritizatorAPI.Controllers
                 var tasks = await taskBusiness.GetAllAsync();
                 if (tasks == null)
                 {
-                    return NotFound();
+                    return NotFound("No tasks found");
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace TaskPrioritizatorAPI.Controllers
             }
         }
         
-        [HttpGet("/tasks/:{id}")]
+        [HttpGet("/tasks/{id}")]
         public async Task<IActionResult> GetByTaskId(int id)
         {
             var task = await taskBusiness.GetAsync(id);
@@ -116,16 +116,20 @@ namespace TaskPrioritizatorAPI.Controllers
             }
             else
             {
-                return NotFound();
+                return NotFound("Invalid task ID");
             }
         }
 
-        [HttpPut("/tasks/:{id}")]
+        [HttpPut("/tasks/{id}")]
         public async Task<IActionResult> UpdateTask(int id, [FromBody] Data.Model.TaskUpdateModel task)
         {
-            if ((await taskBusiness.GetAsync(id)) == null && task.Id != id)
+            if ((await taskBusiness.GetAsync(id)) == null)
             {
-                return BadRequest();
+                return NotFound("Invalid task ID");
+            }
+            else if (task.Id != id) 
+            {
+                return BadRequest("Invalid request data");
             }
             else
             {
@@ -134,13 +138,13 @@ namespace TaskPrioritizatorAPI.Controllers
             }
         }
 
-        [HttpDelete("/tasks/:{id}")]
+        [HttpDelete("/tasks/{id}")]
         public async Task<IActionResult> DeleteTaskById(int id)
         {
             var task = await taskBusiness.GetAsync(id);
             if(task == null)
             {
-                return BadRequest();
+                return NotFound("Invalid task ID");
             }
             else
             {

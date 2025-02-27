@@ -1,5 +1,7 @@
+using Business;
 using Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace TaskPrioritizatorAPI
 {
@@ -17,8 +19,11 @@ namespace TaskPrioritizatorAPI
 
             // Database 
             builder.Services.AddDbContext<TaskDbContext>(options =>
-               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-            );
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly("TaskPrioritizatorAPI")));
+
+
+            builder.Services.AddScoped<ITaskBusiness, TaskBusiness>();
 
             var app = builder.Build();
 
@@ -31,7 +36,6 @@ namespace TaskPrioritizatorAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

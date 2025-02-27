@@ -4,7 +4,7 @@ This document logs all the prompts used during the development of the **TaskPrio
 
 ## **1. RESTful API**
 
-### **Creating REST API **
+### **Creating REST API**
 
 ```md
 Which are key points in building rest api

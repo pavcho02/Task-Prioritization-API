@@ -22,3 +22,6 @@ RESTful API that allows users to create, read, update, and delete tasks while in
 - Deleting a task(DELETE method)
 ## Setup instructions
 ## Future improvements
+### Authentication & Authorization
+- Authentication: Only authorized users should be able to create, update, or delete tasks. This ensures that sensitive data isn't accessible to unauthorized users.
+- Authorization: Role-based access control - administrator to maintain the api and tasks assosiated with it's creator.

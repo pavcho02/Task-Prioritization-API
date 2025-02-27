@@ -51,7 +51,7 @@ namespace TaskPrioritizatorAPI.Controllers
                     return NotFound();
                 }
             }
-            else if (HttpContext.Request.Query.ContainsKey("sort"))
+            else if (HttpContext.Request.Query.ContainsKey("filter"))
             {
                 string filter = HttpContext.Request.Query["filter"];
                 string value = HttpContext.Request.Query["value"];

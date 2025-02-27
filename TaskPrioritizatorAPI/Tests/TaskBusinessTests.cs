@@ -10,21 +10,20 @@ namespace Tests
     public class Tests
     {
         private TaskBusiness taskBusiness;
-
         private Mock<TaskDbContext> context;
-        private Mock<DbSet<Data.Model.Task>> tasks;
+        private Mock<DbSet<Data.Model.Task>> dbSet;
 
         [SetUp]
         public void Setup()
         {
-            context = new Mock<TaskDbContext>();
-            tasks = new Mock<DbSet<Data.Model.Task>>();
+            context = new Mock<TaskDbContext> ();
+            dbSet = new Mock<DbSet<Data.Model.Task>>();
 
             taskBusiness = new TaskBusiness(context.Object);
         }
 
         [Test]
-        public void CreateAsyncAddsTask()
+        public async Task DeleteAsyncRemovesTask()
         {
             var task = new Data.Model.Task
             {
@@ -36,16 +35,14 @@ namespace Tests
                 IsCompleted = false
             };
 
-            var InputTask = new Data.Model.InputTaskModel
-            {
-                Title = "Test",
-                Description = "Test",
-                DueDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                IsCritical = true
-            };
+            dbSet.Setup(x => x.FindAsync(1)).ReturnsAsync(task);
+            dbSet.Setup(x => x.Remove(task));
 
-            Assert.Pass();
+            context.Setup(db => db.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
+
+            await taskBusiness.DeleteAsync(1);
+
+            
         }
-
     }
 }

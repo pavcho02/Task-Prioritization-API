@@ -17,18 +17,19 @@ namespace Business
             if(inputTask.IsCritical)
             {
                 task.Priority = PriorityType.high;
+                return task;
             }
             
-            else if(task.DueDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-3)))
+            else if(task.DueDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)))
             {
                 task.Priority = PriorityType.medium;
+                return task;
             }
             else
             {
                 task.Priority = PriorityType.low;
-            }
-
-            return task;
+                return task;
+            }            
         }
 
         private PriorityType CalculateTaskPriority(Data.Model.TaskUpdateModel task)
@@ -37,7 +38,7 @@ namespace Business
             {
                 return PriorityType.high;
             }
-            else if (task.DueDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-3)))
+            else if (task.DueDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)))
             {
                 return PriorityType.medium;
             }
@@ -77,7 +78,7 @@ namespace Business
 
         public async Task<IEnumerable<Data.Model.Task>?> GetSortedByPriorityLevelAsync() 
         {
-            var tasks = await context.Tasks.OrderBy(Task => Task.Priority).ToListAsync();
+            var tasks = await context.Tasks.OrderBy(Task => (int)Task.Priority).ToListAsync();
             if (tasks != null)
             {
                 return tasks;
@@ -116,7 +117,7 @@ namespace Business
 
         public async Task<IEnumerable<Data.Model.Task>?> GetFilteredByPriorityLevelAsync(PriorityType priorityType)
         {
-            var tasks = await context.Tasks.Where(t => t.Priority ==  priorityType).ToListAsync();
+            var tasks = await context.Tasks.Where(t => t.Priority.Equals(priorityType)).ToListAsync();
             if (tasks != null)
             {
                 return tasks;

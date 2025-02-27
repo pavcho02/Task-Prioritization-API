@@ -2,7 +2,15 @@
 
 This document logs all the prompts used during the development of the **TaskPrioritizatorAPI**, a RESTful API built with **ASP.NET Core Web API** and **SQL Server**, following the MVC structure with a separate **Data Layer** and **Business Layer**.
 
-## **1. Project Setup**
+## **1. RESTful API**
+
+### **Creating REST API **
+
+```md
+Which are key points in building rest api
+```
+
+## **2. Project Setup**
 
 ### **Creating the API Project**
 
@@ -16,7 +24,7 @@ I want to build a RESTful API with ASP.NET Core Web API and SQL Server.
 I want to build on MVC structure with a separate Data Layer and Business Layer.
 ```
 
-## **2. Database and Migrations**
+## **3. Database and Migrations**
 
 ### **Initializing Migrations**
 
@@ -30,7 +38,7 @@ Add-Migration Initial
 The database is created but the error is: "Your target project 'TaskPrioritizatorAPI' doesn't match your migrations assembly 'Data'..."
 ```
 
-## **3. API Development**
+## **4. API Development**
 
 ### **Fixing a Concurrency Issue in DbContext**
 
@@ -50,13 +58,7 @@ How to match action in controller by is there query string and it params?
 I got a status 405 method not allowed.
 ```
 
-## **4. Unit Testing**
-
-### **Adding NUnit Tests**
-
-```md
-Now I need to build NUnit tests.
-```
+## **5. Unit Testing**
 
 ### **Fixing Multiple Entry Points Issue**
 

@@ -137,10 +137,6 @@ namespace TaskPrioritizatorAPI.Controllers
             {
                 return NotFound("Invalid task ID");
             }
-            else if (task.Id != id) 
-            {
-                return BadRequest("Invalid request data");
-            }
             else
             {
                 await taskBusiness.UpdateAsync(task);

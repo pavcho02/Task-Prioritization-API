@@ -35,13 +35,12 @@ Before setting up the project, make sure you have the following installed:
     }
     ```
 4. Run the migration to create the database schema:
-  1.In terminal
       ```bash
+      //In Terminal
       dotnet ef migrations add InitialCreate
       dotnet ef database update
-      ```
-  2.In Package Manager Console(Visual Studio)
-      ```bash
+
+      //in Package Manager Console(Visual Studio)
       Add-Migration Initial
       Update-Database
       ```

@@ -72,10 +72,10 @@ http://localhost:5027/tasks
 ```
 ### Endpoints:
 ---
-#### 1. Create a Task
-#### `POST /tasks`
+### 1. Create a Task
+### `POST /tasks`
 Creates a new task.
-##### Request Body:
+#### Request Body:
 ```json
 {
   "title": "Task Title",
@@ -99,7 +99,7 @@ Creates a new task.
 ```
 ---
 
-## 2. Get All Tasks
+### 2. Get All Tasks
 
 ### `GET /tasks`
 Retrieves all tasks.
@@ -140,7 +140,7 @@ Retrieves all tasks.
 ]
 ```
 ---
-## 3. Get Task By ID
+### 3. Get Task By ID
 
 ### `GET /tasks/{id}`
 
@@ -171,7 +171,7 @@ GET /tasks/1
 }
 ```
 ---
-## 4. Update a Task
+### 4. Update a Task
 ### `PUT /tasks/{id}`
 Updates a specific task by its ID.
 #### Request Body:
@@ -216,7 +216,7 @@ PUT /tasks/1
 }
 ```
 ---
-## 5. Delete a Task
+### 5. Delete a Task
 ### `DELETE /tasks/{id}`
 Deletes a specific task by its ID.
 #### Example Request:

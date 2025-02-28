@@ -103,3 +103,9 @@ After adding Unit Test project to the solution there is an error: CS0017 - progr
 ```md
 I will send you my controller. Can you generate example usages
 ```
+
+### **Creating setup instructions**
+
+```md
+Generate me an example of setup instructions for the API
+```

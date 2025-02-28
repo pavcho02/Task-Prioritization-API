@@ -31,7 +31,7 @@ Before setting up the project, make sure you have the following installed:
 3. In your local project, configure the connection string in `appsettings.json`:
     ```json
     "ConnectionStrings": {
-        "TaskDb": "Server=(localdb)\\YourServer;Database=YourDB;Trusted_Connection=True;"
+        "DefaultConnection": "Server=(localdb)\\YourServer;Database=YourDB;Trusted_Connection=True;"
     }
     ```
 4. Run the migration to create the database schema:

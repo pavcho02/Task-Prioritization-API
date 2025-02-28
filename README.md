@@ -11,6 +11,7 @@ RESTful API that allows users to create, read, update, and delete tasks while in
   - Get all task sorted by default(by priority)
 - Updating an existing task
 - Deleting a task
+## Setup instructions
 ## Endpoints examples
 ## Base URL
 ```
@@ -180,7 +181,6 @@ DELETE /tasks/1
   "message": "Invalid task ID"
 }
 ```
-## Setup instructions
 ## Future improvements
 ### Authentication & Authorization
 - Authentication: Only authorized users should be able to create, update, or delete tasks. This ensures that sensitive data isn't accessible to unauthorized users.

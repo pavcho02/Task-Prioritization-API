@@ -72,10 +72,10 @@ http://localhost:5027/tasks
 ```
 ### Endpoints:
 ---
-## 1. Create a Task
-### `POST /tasks`
+#### 1. Create a Task
+#### `POST /tasks`
 Creates a new task.
-#### Request Body:
+##### Request Body:
 ```json
 {
   "title": "Task Title",

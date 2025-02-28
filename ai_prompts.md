@@ -96,3 +96,10 @@ After adding Unit Test project to the solution there is an error: CS0017 - progr
   </ItemGroup>
 </Project>
 ```
+## **5. Documentation**
+
+### **Creating examples of endpoins usages**
+
+```md
+I will send you my controller. Can you generate example usages
+```

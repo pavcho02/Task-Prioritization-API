@@ -1,6 +1,6 @@
 # TaskPrioritizatorAPI - Development Prompts Log
 
-This document logs all the prompts used during the development of the **TaskPrioritizatorAPI**, a RESTful API built with **ASP.NET Core Web API** and **SQL Server**, following the MVC structure with a separate **Data Layer** and **Business Layer**.
+This document logs all the prompts used during the development of the **TaskPrioritizatorAPI**, a RESTful API built with **ASP.NET Core Web API** and **SQL Server**
 
 ## **1. RESTful API**
 

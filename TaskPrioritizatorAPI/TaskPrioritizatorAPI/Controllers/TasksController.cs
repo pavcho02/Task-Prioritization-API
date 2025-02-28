@@ -27,70 +27,11 @@ namespace TaskPrioritizatorAPI.Controllers
         {
             if (HttpContext.Request.Query.ContainsKey("sort"))
             {
-                string sort = HttpContext.Request.Query["sort"];
-                IEnumerable<Data.Model.Task>? tasks = null;
-                if (sort.Equals("priority"))
-                {
-                    tasks = await taskBusiness.GetSortedByPriorityLevelAsync();
-                }
-                else if (sort.Equals("dueDate"))
-                {
-                    tasks = await taskBusiness.GetSortedByDueDateAsync();
-                }
-                else //default sort is sorting by priority
-                {
-                    tasks = await taskBusiness.GetSortedByPriorityLevelAsync();
-                }
-
-                if (tasks != null)
-                {
-                    return Ok(tasks);
-                }
-                else
-                {
-                    return NotFound("No tasks founded with sorting parameters");
-                }
+                return await GetTasksSorted();
             }
             else if (HttpContext.Request.Query.ContainsKey("filter"))
             {
-                string filter = HttpContext.Request.Query["filter"];
-                string value = HttpContext.Request.Query["value"];
-                IEnumerable<Data.Model.Task>? tasks = null;
-                if (filter.Equals("priority"))
-                {
-                    if (value.Equals("high"))
-                    {
-                        tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.high);
-                    }
-                    else if (value.Equals("medium"))
-                    {
-                        tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.medium);
-                    }
-                    else if (value.Equals("low"))
-                    {
-                        tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.low);
-                    }
-                }
-                else if (filter.Equals("isCompleted"))
-                {
-                    if (value.Equals("true"))
-                    {
-                        tasks = await taskBusiness.GetFilteredByCompletionStatusAsync(true);
-                    }
-                    else
-                    {
-                        tasks = await taskBusiness.GetFilteredByCompletionStatusAsync(false);
-                    }
-                }
-
-                if (tasks != null)
-                {
-                    return Ok(tasks);
-                }
-                else
-                {
-                    return NotFound("No tasks founded with filter parameters");
-                }
+                return await GetTasksFiltered();
             }
             else
             {
@@ -105,7 +46,76 @@ namespace TaskPrioritizatorAPI.Controllers
                 }
             }
         }
-        
+
+        public async Task<IActionResult> GetTasksSorted()
+        {
+            string sort = HttpContext.Request.Query["sort"];
+            IEnumerable<Data.Model.Task>? tasks = null;
+            if (sort.Equals("priority"))
+            {
+                tasks = await taskBusiness.GetSortedByPriorityLevelAsync();
+            }
+            else if (sort.Equals("dueDate"))
+            {
+                tasks = await taskBusiness.GetSortedByDueDateAsync();
+            }
+            else //default sort is sorting by priority
+            {
+                tasks = await taskBusiness.GetSortedByPriorityLevelAsync();
+            }
+
+            if (tasks != null)
+            {
+                return Ok(tasks);
+            }
+            else
+            {
+                return NotFound("No tasks founded with sorting parameters");
+            }
+        }
+
+        public async Task<IActionResult> GetTasksFiltered()
+        {
+            string filter = HttpContext.Request.Query["filter"];
+            string value = HttpContext.Request.Query["value"];
+            IEnumerable<Data.Model.Task>? tasks = null;
+            if (filter.Equals("priority"))
+            {
+                if (value.Equals("high"))
+                {
+                    tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.high);
+                }
+                else if (value.Equals("medium"))
+                {
+                    tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.medium);
+                }
+                else if (value.Equals("low"))
+                {
+                    tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.low);
+                }
+            }
+            else if (filter.Equals("isCompleted"))
+            {
+                if (value.Equals("true"))
+                {
+                    tasks = await taskBusiness.GetFilteredByCompletionStatusAsync(true);
+                }
+                else
+                {
+                    tasks = await taskBusiness.GetFilteredByCompletionStatusAsync(false);
+                }
+            }
+
+            if (tasks != null)
+            {
+                return Ok(tasks);
+            }
+            else
+            {
+                return NotFound("No tasks founded with filter parameters");
+            }
+        }
+
         [HttpGet("/tasks/{id}")]
         public async Task<IActionResult> GetByTaskId(int id)
         {

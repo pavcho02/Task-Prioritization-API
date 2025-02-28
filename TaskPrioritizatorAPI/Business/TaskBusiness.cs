@@ -18,8 +18,7 @@ namespace Business
             {
                 task.Priority = PriorityType.high;
                 return task;
-            }
-            
+            }            
             else if(task.DueDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)))
             {
                 task.Priority = PriorityType.medium;
@@ -34,7 +33,11 @@ namespace Business
 
         private PriorityType CalculateTaskPriority(Data.Model.TaskUpdateModel task)
         {
-            if (task.IsCritical)
+            if(task.IsCompleted)
+            {
+                return PriorityType.low;
+            }
+            else if (task.IsCritical)
             {
                 return PriorityType.high;
             }

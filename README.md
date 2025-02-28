@@ -12,8 +12,62 @@ RESTful API that allows users to create, read, update, and delete tasks while in
 - Updating an existing task
 - Deleting a task
 ## Setup instructions
+### Prerequisites
+Before setting up the project, make sure you have the following installed:
+- .NET 6.0 or later
+- Visual Studio 2022 or later, or Visual Studio Code
+- SQL Server or SQL Server Express
+- Postman or any other API testing tool (optional)
+
+### Clone the Repository
+1. Clone the repository to your local machine:
+    ```
+    git clone https://github.com/yourusername/TaskPrioritizatorAPI.git
+    ```
+
+### Setup the Database
+1. Open **SQL Server Management Studio** (SSMS) or any SQL Server tool.
+2. Create a new database called `TaskPrioritizatorDb`.
+3. In your local project, configure the connection string in `appsettings.json`:
+    ```json
+    "ConnectionStrings": {
+        "TaskDb": "Server=(localdb)\\YourServer;Database=YourDB;Trusted_Connection=True;"
+    }
+    ```
+4. Run the migration to create the database schema:
+In terminal
+    ```bash
+    dotnet ef migrations add InitialCreate
+    dotnet ef database update
+    ```
+In Package Manager Console(Visual Studio)
+    ```bash
+    Add-Migration Initial
+    Update-Database
+    ```
+
+### Running the Project
+1. Open the solution in **Visual Studio** or **Visual Studio Code**.
+2. Build the project by pressing `Ctrl+Shift+B` or `F6`.
+3. Start the project by pressing `F5` or using the terminal:
+    ```bash
+    dotnet run
+    ```
+4. The API should now be running locally at `http://localhost:5207`.
+
+### Testing
+1. You can use **Postman** or any other API tool to test the endpoints.
+2. Set the request method and URL for each endpoint based on your API needs.
+
+### Unit Testing
+1. Open the **Test Project** in Visual Studio.
+2. Run the tests using Visual Studio Test Explorer or using the following command:
+    ```bash
+    dotnet test
+    ```
+
 ## Endpoints examples
-## Base URL
+### Base URL
 ```
 http://localhost:5027/tasks
 ```

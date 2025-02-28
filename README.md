@@ -99,11 +99,11 @@ Creates a new task.
 ```
 ---
 
-### 2. Get All Tasks
+### 2. Get Tasks
 
 ### `GET /tasks`
-Retrieves all tasks.
-#### Query Parameters:
+Retrieves tasks. If there are no query parameters gets all tasks sorted by default(by priority)
+#### Query Parameters(optional):
 - `sort`: The sorting criteria (`priority` or `dueDate`).
 - `filter`: The filter criteria (`priority` or `isCompleted`).
 - `value`: The value for the filter (e.g., `high`, `medium`, `low`, `true`, `false`).

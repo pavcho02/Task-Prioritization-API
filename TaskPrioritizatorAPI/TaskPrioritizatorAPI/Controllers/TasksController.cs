@@ -23,96 +23,83 @@ namespace TaskPrioritizatorAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTasks()
+        public async Task<IActionResult> GetTasks([FromQuery] string? sort, [FromQuery] string? filter, [FromQuery] string? value)
         {
-            if (HttpContext.Request.Query.ContainsKey("sort"))
+            if (!string.IsNullOrEmpty(sort))
             {
-                return await GetTasksSorted();
+                IEnumerable<Data.Model.Task> tasks = new List<Data.Model.Task>();
+                if (sort.Equals("priority"))
+                {
+                    tasks = await taskBusiness.GetSortedByPriorityLevelAsync();
+                }
+                else if (sort.Equals("dueDate"))
+                {
+                    tasks = await taskBusiness.GetSortedByDueDateAsync();
+                }
+                else //default sort is sorting by priority
+                {
+                    tasks = await taskBusiness.GetSortedByPriorityLevelAsync();
+                }
+
+                if (tasks.Any())
+                {
+                    return Ok(tasks);
+                }
+                else
+                {
+                    return NotFound("No tasks founded with sorting parameters");
+                }
             }
-            else if (HttpContext.Request.Query.ContainsKey("filter"))
+            else if (!string.IsNullOrEmpty(filter) && !string.IsNullOrEmpty(value))
             {
-                return await GetTasksFiltered();
+                IEnumerable<Data.Model.Task>? tasks = new List<Data.Model.Task>();
+                if (filter.Equals("priority"))
+                {
+                    if (value.Equals("high"))
+                    {
+                        tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.high);
+                    }
+                    else if (value.Equals("medium"))
+                    {
+                        tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.medium);
+                    }
+                    else if (value.Equals("low"))
+                    {
+                        tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.low);
+                    }
+                }
+                else if (filter.Equals("isCompleted"))
+                {
+                    if (value.Equals("true"))
+                    {
+                        tasks = await taskBusiness.GetFilteredByCompletionStatusAsync(true);
+                    }
+                    else
+                    {
+                        tasks = await taskBusiness.GetFilteredByCompletionStatusAsync(false);
+                    }
+                }
+
+                if (tasks.Any())
+                {
+                    return Ok(tasks);
+                }
+                else
+                {
+                    return NotFound("No tasks founded with filter parameters");
+                }
             }
             else
             {
                 var tasks = await taskBusiness.GetAllAsync();
-                if (tasks == null)
-                {
-                    return NotFound("No tasks found");
-                }
-                else
+                if (tasks.Any())
                 {
                     return Ok(tasks);
                 }
-            }
-        }
-
-        public async Task<IActionResult> GetTasksSorted()
-        {
-            string sort = HttpContext.Request.Query["sort"];
-            IEnumerable<Data.Model.Task>? tasks = null;
-            if (sort.Equals("priority"))
-            {
-                tasks = await taskBusiness.GetSortedByPriorityLevelAsync();
-            }
-            else if (sort.Equals("dueDate"))
-            {
-                tasks = await taskBusiness.GetSortedByDueDateAsync();
-            }
-            else //default sort is sorting by priority
-            {
-                tasks = await taskBusiness.GetSortedByPriorityLevelAsync();
-            }
-
-            if (tasks != null)
-            {
-                return Ok(tasks);
-            }
-            else
-            {
-                return NotFound("No tasks founded with sorting parameters");
-            }
-        }
-
-        public async Task<IActionResult> GetTasksFiltered()
-        {
-            string filter = HttpContext.Request.Query["filter"];
-            string value = HttpContext.Request.Query["value"];
-            IEnumerable<Data.Model.Task>? tasks = null;
-            if (filter.Equals("priority"))
-            {
-                if (value.Equals("high"))
-                {
-                    tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.high);
-                }
-                else if (value.Equals("medium"))
-                {
-                    tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.medium);
-                }
-                else if (value.Equals("low"))
-                {
-                    tasks = await taskBusiness.GetFilteredByPriorityLevelAsync(PriorityType.low);
-                }
-            }
-            else if (filter.Equals("isCompleted"))
-            {
-                if (value.Equals("true"))
-                {
-                    tasks = await taskBusiness.GetFilteredByCompletionStatusAsync(true);
-                }
                 else
                 {
-                    tasks = await taskBusiness.GetFilteredByCompletionStatusAsync(false);
+                    return NotFound("No tasks found");                    
                 }
-            }
-
-            if (tasks != null)
-            {
-                return Ok(tasks);
-            }
-            else
-            {
-                return NotFound("No tasks founded with filter parameters");
             }
         }
 
@@ -147,8 +134,7 @@ namespace TaskPrioritizatorAPI.Controllers
         [HttpDelete("/tasks/{id}")]
         public async Task<IActionResult> DeleteTaskById(int id)
         {
-            var task = await taskBusiness.GetAsync(id);
-            if(task == null)
+            if ((await taskBusiness.GetAsync(id)) == null)
             {
                 return NotFound("Invalid task ID");
             }

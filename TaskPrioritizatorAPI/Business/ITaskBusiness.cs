@@ -13,15 +13,15 @@ namespace Business
     {
         public Task<Data.Model.Task> CreateAsync(Data.Model.InputTaskModel inputTask);
 
-        public Task<IEnumerable<Data.Model.Task>?> GetAllAsync();
+        public Task<IEnumerable<Data.Model.Task>> GetAllAsync();
 
-        public Task<IEnumerable<Data.Model.Task>?> GetSortedByPriorityLevelAsync();
+        public Task<IEnumerable<Data.Model.Task>> GetSortedByPriorityLevelAsync();
 
-        public Task<IEnumerable<Data.Model.Task>?> GetSortedByDueDateAsync();
+        public Task<IEnumerable<Data.Model.Task>> GetSortedByDueDateAsync();
 
-        public Task<IEnumerable<Data.Model.Task>?> GetFilteredByCompletionStatusAsync(bool isCompleted);
+        public Task<IEnumerable<Data.Model.Task>> GetFilteredByCompletionStatusAsync(bool isCompleted);
 
-        public Task<IEnumerable<Data.Model.Task>?> GetFilteredByPriorityLevelAsync(PriorityType priorityType);
+        public Task<IEnumerable<Data.Model.Task>> GetFilteredByPriorityLevelAsync(PriorityType priorityType);
 
         public Task<Data.Model.Task?> GetAsync(int id);
 

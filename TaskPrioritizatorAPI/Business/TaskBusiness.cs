@@ -68,71 +68,32 @@ namespace Business
 
         public async Task<Data.Model.Task?> GetAsync(int id)
         {
-            var task = await context.Tasks.FindAsync(id);
-            if(task != null)
-            {
-                return task;
-            }
-            else
-            {
-                return null;
-            }
+            return await context.Tasks.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Data.Model.Task>?> GetSortedByPriorityLevelAsync() 
+        public async Task<IEnumerable<Data.Model.Task>> GetSortedByPriorityLevelAsync() 
         {
-            var tasks = await context.Tasks.OrderBy(Task => (int)Task.Priority).ToListAsync();
-            if (tasks != null)
-            {
-                return tasks;
-            }
-            else
-            {
-                return null;
-            }
+            return await context.Tasks.OrderBy(Task => (int)Task.Priority).ToListAsync();
         }
 
-        public async Task<IEnumerable<Data.Model.Task>?> GetSortedByDueDateAsync() 
+        public async Task<IEnumerable<Data.Model.Task>> GetSortedByDueDateAsync() 
         {
-            var tasks = await context.Tasks.OrderBy(Task => Task.DueDate).ToListAsync();
-            if (tasks != null)
-            {
-                return tasks;
-            }
-            else
-            {
-                return null;
-            }
+            return await context.Tasks.OrderBy(Task => Task.DueDate).ToListAsync();
         }
 
-        public async Task<IEnumerable<Data.Model.Task>?> GetFilteredByCompletionStatusAsync(bool isCompleted) 
+        public async Task<IEnumerable<Data.Model.Task>> GetFilteredByCompletionStatusAsync(bool isCompleted) 
         {
-            var tasks = await context.Tasks.Where(t => t.IsCompleted == isCompleted).ToListAsync();
-            if (tasks != null)
-            {
-                return tasks;
-            }
-            else
-            {
-                return null;
-            }
+            return await context.Tasks.Where(t => t.IsCompleted == isCompleted).ToListAsync();
         }
 
-        public async Task<IEnumerable<Data.Model.Task>?> GetFilteredByPriorityLevelAsync(PriorityType priorityType)
+        public async Task<IEnumerable<Data.Model.Task>> GetFilteredByPriorityLevelAsync(PriorityType priorityType)
         {
-            var tasks = await context.Tasks.Where(t => t.Priority.Equals(priorityType)).ToListAsync();
-            if (tasks != null)
-            {
-                return tasks;
-            }
-            else
-            {
-                return null;
-            }
+            return await context.Tasks.Where(t => t.Priority.Equals(priorityType)).ToListAsync();
         }
 
-        public async Task<IEnumerable<Data.Model.Task>?> GetAllAsync()
+        public async Task<IEnumerable<Data.Model.Task>> GetAllAsync()
         {
+            //the default sorting is by priority level
             return await GetSortedByPriorityLevelAsync();
         }
 
